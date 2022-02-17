@@ -34,11 +34,16 @@ program
     `use polling for the watcher, defaults to false`,
     false
   )
+  .option(
+    '--port [port_number]',
+    `specify a different port to serve the app`,
+    false
+  )
   .parse(process.argv)
 
 const shell = process.env.SHELL
 const app = next({ dev: true, dir: program.root || process.cwd() })
-const port = parseInt(process.env.PORT, 10) || 3000
+const port = parseInt(program.port || process.env.PORT, 10) || 3000
 const handle = app.getRequestHandler()
 
 app.prepare().then(() => {
